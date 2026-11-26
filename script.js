@@ -3,7 +3,7 @@
    ========================================================================== */
 const BIRTHDAY_CONFIG = {
   recipientName: "Ceyra",
-  senderName: "Pak Usamah (Guru Informatika & Wali Kelasmu)",
+  senderName: "Ayah 7b wkwk",
 
   // Format: YYYY-MM-DD (26 November 2013)
   birthDate: "2013-11-26",
