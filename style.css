@@ -527,12 +527,13 @@ body {
 .greeting-paragraph {
   font-size: clamp(0.98rem, 2.2vw, 1.1rem);
   color: var(--color-text);
-  white-space: pre-line;
+  white-space: normal;
 }
 
 /* Text Reveal Word Animation */
 .reveal-word {
   display: inline-block;
+  margin-right: 0.28em;
   opacity: 0;
   transform: translateY(10px);
   animation: wordFadeIn 0.55s forwards;
@@ -871,7 +872,7 @@ body {
   font-size: 0.98rem;
   color: var(--color-text);
   line-height: 1.75;
-  white-space: pre-line;
+  white-space: normal;
 }
 
 /* Envelope Front Pocket & Flap */
