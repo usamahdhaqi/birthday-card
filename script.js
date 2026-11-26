@@ -1,306 +1,622 @@
-/* =========================================================
-   BIRTHDAY CARD CONFIGURATION — ubah data di bagian ini saja
-   ========================================================= */
-const CONFIG = {
-  recipientName: "Ceyraaa",
-  senderName: "AYAH 7B WKWK",
-  birthDate: "2013-11-26", // format YYYY-MM-DD
-  celebratedAge: 13,       // usia yang sedang dirayakan
-  birthdayMessage: "Today is your special day. May your life always be filled with happiness, endless blessings, beautiful memories, and wonderful surprises. Never stop smiling, never stop dreaming, and always remember how special you are. You deserve all the beautiful things in this world.",
-  letter: [
-    "On your special day, I just want to remind you how wonderful you are.",
-    "I hope this new chapter brings you countless reasons to smile, new adventures, beautiful opportunities, and everything your heart has been wishing for.",
-    "Thank you for being someone special. Keep shining, keep growing, and keep being yourself.",
-    "Once again, Happy Birthday!"
-  ],
+/* ==========================================================================
+   1. KONFIGURASI UTAMA (DISESUAIKAN UNTUK CEYRA - LAHIR 26 NOVEMBER 2013)
+   ========================================================================== */
+const BIRTHDAY_CONFIG = {
+  recipientName: "Ceyra",
+  senderName: "Pak Usamah (Guru Informatika & Wali Kelasmu)",
+
+  // Format: YYYY-MM-DD (26 November 2013)
+  birthDate: "2013-11-26",
+
+  // Kosongkan (null) agar usia dihitung otomatis dari birthDate (2026 - 2013 = 13 tahun)
+  customAge: null,
+
+  // Ucapan Utama di Hero Section (Mix Bahasa Indonesia & Bahasa Inggris)
+  greetingMessage: `Happy Birthday, Ceyra! 🎉
+
+Today is your special day. Selamat ulang tahun ya, Ceyra! Semoga di usia yang baru ini kamu selalu diberi kesehatan, kebahagiaan, keberkahan yang melimpah, dan makin semangat belajar serta meraih cita-citamu.
+
+Never stop smiling, never stop dreaming, and always remember how special you are. Teruslah tumbuh jadi pribadi yang baik, kreatif, dan percaya diri.
+
+You deserve all the beautiful things in this world. ✨`,
+
+  // Isi Surat Digital di Dalam Amplop (Mix Bahasa Indonesia & Bahasa Inggris)
+  letterMessage: `Dear Ceyra,
+
+On your special day, Bapak/Ibu ingin mengingatkan betapa bangganya kami melihat perkembanganmu. Happy birthday, semoga tahun ini membawa banyak cerita seru dan prestasi yang membanggakan!
+
+I hope this new chapter brings you countless reasons to smile, new adventures, beautiful opportunities, and everything your heart has been wishing for. Jangan pernah takut mencoba hal baru dan teruslah bertanya kalau ada yang belum kamu pahami.
+
+Thank you for being someone special in our class. Kehadiranmu selalu membawa warna positif di kelas.
+
+Keep shining, keep growing, and keep being yourself. Tetap rendah hati, rajin berdoa, dan jaga semangat belajarmu ya.
+
+Once again, Happy Birthday! Selamat ulang tahun, Ceyra!
+
+With love & best wishes,
+Pak Usamah`,
+
+  // Daftar Foto Galeri (Pastikan nama file sesuai dengan folder assets/images/)
   photos: [
-    { src: "assets/images/photo1.jpg", caption: "A moment to remember" },
-    { src: "assets/images/photo2.jpg", caption: "The little things" },
-    { src: "assets/images/photo3.jpg", caption: "A happy memory" },
-    { src: "assets/images/photo4.jpg", caption: "Forever in our hearts" }
+    {
+      src: "assets/images/photo1.jpg",
+      caption: "Momen seru penuh tawa bersama ✨"
+    },
+    {
+      src: "assets/images/photo2.jpg",
+      caption: "Keep smiling, great things are coming 🌸"
+    },
+    {
+      src: "assets/images/photo3.jpg",
+      caption: "Kenangan berharga di perjalanan belajar 💗"
+    },
+    {
+      src: "assets/images/photo4.jpg",
+      caption: "Here’s to a brighter year ahead! 🌟"
+    }
   ],
-  songName: "A Little Birthday Melody",
-  audioFile: "assets/audio/birthday-music.mp3",
-  theme: { pink: "#e99caf", lavender: "#e8e1f4", cream: "#fffaf5", gold: "#c9a66b" }
+
+  // Judul Lagu di Pemutar Musik
+  songTitle: "Happy Birthday — Special Mix",
+
+  // Pesan Kejutan Acak (Mix Bahasa Indonesia & Bahasa Inggris)
+  surpriseMessages: [
+    "You are one of a kind! Semangat terus ya, Ceyra! 💗",
+    "Keep smiling, beautiful soul! Senyummu itu bikin hari lebih cerah ✨",
+    "May all your dreams come true! Semoga semua cita-citamu tercapai 🌟",
+    "You deserve the happiest life! Selamat bertambah usia ya! 🌸",
+    "Sending you endless hugs! Tetap jadi anak yang hebat dan baik hati 🤗",
+    "Terus berkarya dan jangan berhenti belajar ya, Ceyra! 🚀"
+  ],
+
+  // Palet Warna Tema Utama
+  themeColors: {
+    pink: "#f8b4c8",
+    pinkDeep: "#e87a9f",
+    lavender: "#d8c8f8",
+    cream: "#fff9f5",
+    gold: "#d4af37"
+  },
+
+  // Variasi Background Gradient untuk Tombol "Click for a Surprise!"
+  surpriseGradients: [
+    "linear-gradient(135deg, #fff9f5 0%, #fce4ec 45%, #ede7f6 100%)",
+    "linear-gradient(135deg, #fdfbfb 0%, #f6d5f7 50%, #fbe9d7 100%)",
+    "linear-gradient(135deg, #fff1eb 0%, #ace0f9 100%)",
+    "linear-gradient(135deg, #f3e7e9 0%, #e3eeff 50%, #f9d1d1 100%)",
+    "linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)"
+  ]
 };
 
-const $ = (selector) => document.querySelector(selector);
-const birthdayAudio = $("#birthdayAudio");
-let activePhoto = 0;
-let musicStarted = false;
-let countdownTimer;
+/* ==========================================================================
+   2. INISIALISASI DOM & VARIABEL GLOBAL
+   ========================================================================== */
+document.addEventListener("DOMContentLoaded", () => {
+  applyThemeColors();
+  populatePersonalContent();
+  initAmbientParticles();
+  initWelcomeScreen();
+  initMusicPlayer();
+  initCakeInteraction();
+  initEnvelopeLetter();
+  initPhotoGallery();
+  initSurpriseFeature();
+  initCountdownAndAge();
+  initScrollReveal();
 
-/* Apply user-configured details */
-document.documentElement.style.setProperty("--pink", CONFIG.theme.pink);
-document.documentElement.style.setProperty("--lavender", CONFIG.theme.lavender);
-document.documentElement.style.setProperty("--cream", CONFIG.theme.cream);
-document.documentElement.style.setProperty("--gold", CONFIG.theme.gold);
-birthdayAudio.src = CONFIG.audioFile;
-birthdayAudio.volume = 0.65;
-$("#volumeControl").value = String(birthdayAudio.volume);
-$("#volumeControl").addEventListener("input", (event) => { birthdayAudio.volume = Number(event.target.value); });
-$("#recipientName").textContent = CONFIG.recipientName;
-$("#heroMessage").textContent = CONFIG.birthdayMessage;
-$("#birthdayDateLabel").textContent = formatDate(parseBirthDate(CONFIG.birthDate));
-$("#ageLabel").textContent = `Celebrating ${CONFIG.celebratedAge} beautiful years of ${CONFIG.recipientName}.`;
-$("#year").textContent = new Date().getFullYear();
-
-/* Small floating decorations */
-function createDecorations() {
-  const container = $("#floatingDecor");
-  const symbols = ["♡", "✦", "✧", "·"];
-  for (let i = 0; i < 24; i++) {
-    const item = document.createElement("span");
-    item.className = `decor ${i % 3 === 0 ? "heart-decor" : "star-decor"}`;
-    item.textContent = symbols[i % symbols.length];
-    item.style.left = `${Math.random() * 100}%`;
-    item.style.top = `${Math.random() * 100}%`;
-    item.style.fontSize = `${10 + Math.random() * 16}px`;
-    item.style.animationDelay = `${Math.random() * -8}s`;
-    container.appendChild(item);
-  }
-}
-createDecorations();
-
-function confettiBurst(amount = 75) {
-  const colors = ["#e99caf", "#c9b7e4", "#e8c98f", "#fff", "#d78aa5"];
-  for (let i = 0; i < amount; i++) {
-    const piece = document.createElement("span");
-    piece.className = "confetti";
-    piece.style.left = `${Math.random() * 100}vw`;
-    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-    piece.style.borderRadius = Math.random() > .5 ? "50%" : "2px";
-    piece.style.setProperty("--duration", `${2.2 + Math.random() * 2.4}s`);
-    piece.style.setProperty("--drift", `${-120 + Math.random() * 240}px`);
-    document.body.appendChild(piece);
-    piece.addEventListener("animationend", () => piece.remove(), { once: true });
-  }
-}
-
-$("#openGift").addEventListener("click", () => {
-  $("#gift").classList.add("open");
-  confettiBurst(95);
-  $("#openGift").disabled = true;
-  window.setTimeout(() => {
-    $("#welcome").classList.add("leaving");
-    $("#welcome").style.transition = "opacity .7s ease, transform .7s ease";
-    $("#welcome").style.opacity = "0";
-    $("#welcome").style.transform = "scale(.97)";
-    window.setTimeout(() => {
-      $("#welcome").hidden = true;
-      $("#birthdaySite").hidden = false;
-      observeReveals();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 650);
-  }, 650);
+  document.getElementById("current-year").textContent = new Date().getFullYear();
 });
 
-/* Cake wish interaction */
-let candlesBlown = false;
-$("#blowCandles").addEventListener("click", () => {
-  if (candlesBlown) {
-    $("#wishResult").textContent = "Your wish is already on its way! ✨";
-    return;
-  }
-  candlesBlown = true;
-  $("#flame").classList.add("off");
-  const smoke = document.createElement("span");
-  smoke.className = "smoke";
-  $("#cakeIllustration").appendChild(smoke);
-  confettiBurst(65);
-  $("#wishHint").textContent = "A little wish, sent to the universe…";
-  $("#wishResult").textContent = "Your wish is on its way! ✨";
-  $("#blowCandles").textContent = "Wish sent ♡";
-  $("#blowCandles").disabled = true;
-});
+/* ==========================================================================
+   3. TERAPKAN WARNA & DATA PERSONAL DARI CONFIG
+   ========================================================================== */
+function applyThemeColors() {
+  const root = document.documentElement;
+  const { pink, pinkDeep, lavender, cream, gold } = BIRTHDAY_CONFIG.themeColors;
+  root.style.setProperty("--color-pink", pink);
+  root.style.setProperty("--color-pink-deep", pinkDeep);
+  root.style.setProperty("--color-lavender", lavender);
+  root.style.setProperty("--color-cream", cream);
+  root.style.setProperty("--color-gold", gold);
+}
 
-/* Personal letter */
-function renderLetter() {
-  const content = $("#letterContent");
-  content.replaceChildren();
-  const greeting = document.createElement("p");
-  greeting.textContent = `Dear ${CONFIG.recipientName},`;
-  content.appendChild(greeting);
-  CONFIG.letter.forEach((line) => {
-    const p = document.createElement("p");
-    p.textContent = line;
-    content.appendChild(p);
+function populatePersonalContent() {
+  document.title = `Happy Birthday, ${BIRTHDAY_CONFIG.recipientName}! ✨`;
+  document.getElementById("recipient-name-display").textContent = BIRTHDAY_CONFIG.recipientName;
+  document.getElementById("song-title").textContent = BIRTHDAY_CONFIG.songTitle;
+
+  const birthObj = parseLocalDate(BIRTHDAY_CONFIG.birthDate);
+  const formattedMonthDay = birthObj.toLocaleDateString("id-ID", {
+    month: "long",
+    day: "numeric"
   });
-  const signoff = document.createElement("p");
-  signoff.innerHTML = "With love,<br>";
-  const sender = document.createElement("strong");
-  sender.textContent = CONFIG.senderName;
-  signoff.appendChild(sender);
-  content.appendChild(signoff);
+  document.getElementById("birthday-date-display").textContent = formattedMonthDay;
 }
-renderLetter();
-$("#openLetter").addEventListener("click", () => {
-  $("#openLetter").classList.add("open");
-  $("#letterInstruction").hidden = true;
-  window.setTimeout(() => {
-    $("#openLetter").hidden = true;
-    $("#letterPaper").hidden = false;
-  }, 420);
-});
-$("#closeLetter").addEventListener("click", () => {
-  $("#letterPaper").hidden = true;
-  $("#openLetter").hidden = false;
-  $("#openLetter").classList.remove("open");
-  $("#letterInstruction").hidden = false;
-});
 
-/* Gallery and accessible lightbox */
-function renderGallery() {
-  const grid = $("#photoGrid");
-  CONFIG.photos.forEach((photo, index) => {
-    const figure = document.createElement("figure");
-    figure.className = "photo-card reveal";
-    figure.style.setProperty("--tilt", `${index % 2 ? 2 : -2}deg`);
+function parseLocalDate(dateStr) {
+  const [year, month, day] = dateStr.split("-").map(Number);
+  return new Date(year, month - 1, day);
+}
+
+/* ==========================================================================
+   4. EFEK ANIMASI TEXT REVEAL (KATA DEMI KATA)
+   ========================================================================== */
+function revealTextGradually(element, text, delayStep = 45) {
+  element.innerHTML = "";
+  const lines = text.split("\n");
+  let wordIndex = 0;
+
+  lines.forEach((line, lineIdx) => {
+    if (line.trim() === "") {
+      element.appendChild(document.createElement("br"));
+      element.appendChild(document.createElement("br"));
+      return;
+    }
+
+    const words = line.split(" ");
+    words.forEach((word) => {
+      const span = document.createElement("span");
+      span.textContent = word + " ";
+      span.className = "reveal-word";
+      span.style.animationDelay = `${wordIndex * delayStep}ms`;
+      element.appendChild(span);
+      wordIndex++;
+    });
+
+    if (lineIdx < lines.length - 1 && lines[lineIdx + 1].trim() !== "") {
+      element.appendChild(document.createElement("br"));
+    }
+  });
+}
+
+/* ==========================================================================
+   5. AMBIENT PARTICLES (HEARTS, STARS, SPARKLES) & BALLOONS
+   ========================================================================== */
+function initAmbientParticles() {
+  const container = document.getElementById("ambient-particles");
+  const symbols = ["♡", "✦", "✨", "⋆", "❀"];
+  const colors = ["#e87a9f", "#d4af37", "#b388eb", "#f48fb1"];
+
+  for (let i = 0; i < 24; i++) {
+    const el = document.createElement("span");
+    el.className = "particle-item";
+    el.textContent = symbols[i % symbols.length];
+    el.style.left = `${Math.random() * 100}%`;
+    el.style.fontSize = `${12 + Math.random() * 14}px`;
+    el.style.color = colors[i % colors.length];
+    el.style.animationDuration = `${9 + Math.random() * 11}s`;
+    el.style.animationDelay = `${Math.random() * 8}s`;
+    container.appendChild(el);
+  }
+}
+
+function spawnBalloons() {
+  const container = document.getElementById("balloons-container");
+  const balloonColors = [
+    "rgba(248, 180, 200, 0.75)",
+    "rgba(216, 200, 248, 0.75)",
+    "rgba(243, 229, 171, 0.8)",
+    "rgba(255, 209, 220, 0.75)"
+  ];
+
+  for (let i = 0; i < 10; i++) {
+    const balloon = document.createElement("div");
+    balloon.className = "balloon";
+    balloon.style.left = `${5 + Math.random() * 90}%`;
+    balloon.style.background = balloonColors[i % balloonColors.length];
+    balloon.style.animationDuration = `${14 + Math.random() * 10}s`;
+    balloon.style.animationDelay = `${Math.random() * 6}s`;
+    container.appendChild(balloon);
+  }
+}
+
+/* ==========================================================================
+   6. CONFETTI ENGINE (CANVAS RINGAN & PERFORMA TINGGI)
+   ========================================================================== */
+const canvas = document.getElementById("confetti-canvas");
+const ctx = canvas.getContext("2d");
+let confettiPieces = [];
+let animationFrameId = null;
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+function launchConfetti(count = 110) {
+  const colors = ["#f8b4c8", "#e87a9f", "#d8c8f8", "#d4af37", "#fff0f5", "#b388eb"];
+
+  for (let i = 0; i < count; i++) {
+    confettiPieces.push({
+      x: canvas.width * 0.5 + (Math.random() - 0.5) * 260,
+      y: canvas.height * 0.45,
+      vx: (Math.random() - 0.5) * 14,
+      vy: Math.random() * -12 - 4,
+      size: Math.random() * 7 + 4,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rotation: Math.random() * 360,
+      rotationSpeed: (Math.random() - 0.5) * 10,
+      gravity: 0.28,
+      opacity: 1
+    });
+  }
+
+  if (!animationFrameId) {
+    animateConfetti();
+  }
+}
+
+function animateConfetti() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  confettiPieces.forEach((p, index) => {
+    p.x += p.vx;
+    p.y += p.vy;
+    p.vy += p.gravity;
+    p.vx *= 0.99;
+    p.rotation += p.rotationSpeed;
+    p.opacity -= 0.006;
+
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate((p.rotation * Math.PI) / 180);
+    ctx.globalAlpha = Math.max(0, p.opacity);
+    ctx.fillStyle = p.color;
+    ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+    ctx.restore();
+
+    if (p.opacity <= 0 || p.y > canvas.height + 30) {
+      confettiPieces.splice(index, 1);
+    }
+  });
+
+  if (confettiPieces.length > 0) {
+    animationFrameId = requestAnimationFrame(animateConfetti);
+  } else {
+    animationFrameId = null;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+}
+
+/* ==========================================================================
+   7. WELCOME SCREEN & TRANSISI KE HALAMAN UTAMA
+   ========================================================================== */
+function initWelcomeScreen() {
+  const openBtn = document.getElementById("open-gift-btn");
+  const giftBox = document.getElementById("gift-box");
+  const welcomeScreen = document.getElementById("welcome-screen");
+  const mainContent = document.getElementById("main-content");
+  const greetingEl = document.getElementById("greeting-text");
+
+  let isOpened = false;
+
+  const triggerOpen = () => {
+    if (isOpened) return;
+    isOpened = true;
+
+    giftBox.classList.add("opened");
+    launchConfetti(140);
+    startMusicAfterInteraction();
+
+    setTimeout(() => {
+      welcomeScreen.classList.add("fade-out");
+      mainContent.classList.remove("hidden");
+      spawnBalloons();
+      revealTextGradually(greetingEl, BIRTHDAY_CONFIG.greetingMessage, 40);
+
+      setTimeout(() => {
+        welcomeScreen.classList.add("hidden");
+      }, 900);
+    }, 650);
+  };
+
+  openBtn.addEventListener("click", triggerOpen);
+  giftBox.addEventListener("click", triggerOpen);
+  giftBox.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      triggerOpen();
+    }
+  });
+}
+
+/* ==========================================================================
+   8. MUSIC PLAYER (PATUH KEBIJAKAN AUTOPLAY BROWSER)
+   ========================================================================== */
+let audioEl, musicIcon, equalizerEl;
+
+function initMusicPlayer() {
+  audioEl = document.getElementById("bg-music");
+  const toggleBtn = document.getElementById("music-toggle-btn");
+  const volumeSlider = document.getElementById("volume-slider");
+  musicIcon = document.getElementById("music-icon");
+  equalizerEl = document.getElementById("equalizer");
+
+  audioEl.volume = parseFloat(volumeSlider.value);
+
+  toggleBtn.addEventListener("click", () => {
+    if (audioEl.paused) {
+      playMusic();
+    } else {
+      pauseMusic();
+    }
+  });
+
+  volumeSlider.addEventListener("input", (e) => {
+    audioEl.volume = parseFloat(e.target.value);
+  });
+}
+
+function startMusicAfterInteraction() {
+  if (audioEl && audioEl.paused) {
+    playMusic();
+  }
+}
+
+function playMusic() {
+  audioEl
+    .play()
+    .then(() => {
+      musicIcon.className = "fa-solid fa-pause";
+      equalizerEl.classList.add("playing");
+    })
+    .catch(() => {
+      musicIcon.className = "fa-solid fa-play";
+      equalizerEl.classList.remove("playing");
+    });
+}
+
+function pauseMusic() {
+  audioEl.pause();
+  musicIcon.className = "fa-solid fa-play";
+  equalizerEl.classList.remove("playing");
+}
+
+/* ==========================================================================
+   9. INTERAKSI KUE ULANG TAHUN & LILIN
+   ========================================================================== */
+function initCakeInteraction() {
+  const blowBtn = document.getElementById("blow-candles-btn");
+  const relightBtn = document.getElementById("relight-candles-btn");
+  const flames = document.querySelectorAll(".flame");
+  const smokes = document.querySelectorAll(".smoke");
+  const wishMessage = document.getElementById("wish-message");
+
+  blowBtn.addEventListener("click", () => {
+    flames.forEach((flame) => flame.classList.add("extinguished"));
+    smokes.forEach((smoke) => {
+      smoke.classList.remove("rising");
+      void smoke.offsetWidth;
+      smoke.classList.add("rising");
+    });
+
+    launchConfetti(120);
+    wishMessage.classList.remove("hidden");
+    blowBtn.classList.add("hidden");
+    relightBtn.classList.remove("hidden");
+  });
+
+  relightBtn.addEventListener("click", () => {
+    flames.forEach((flame) => flame.classList.remove("extinguished"));
+    wishMessage.classList.add("hidden");
+    relightBtn.classList.add("hidden");
+    blowBtn.classList.remove("hidden");
+  });
+}
+
+/* ==========================================================================
+   10. SURAT DIGITAL & ANIMASI AMPLOP
+   ========================================================================== */
+function initEnvelopeLetter() {
+  const envelopeWrapper = document.getElementById("envelope-wrapper");
+  const openLetterBtn = document.getElementById("open-letter-btn");
+  const letterContent = document.getElementById("letter-content");
+
+  let isLetterOpened = false;
+
+  openLetterBtn.addEventListener("click", () => {
+    isLetterOpened = !isLetterOpened;
+
+    if (isLetterOpened) {
+      envelopeWrapper.classList.add("open");
+      openLetterBtn.innerHTML = '<i class="fa-solid fa-envelope"></i> Close Letter';
+      revealTextGradually(letterContent, BIRTHDAY_CONFIG.letterMessage, 32);
+    } else {
+      envelopeWrapper.classList.remove("open");
+      openLetterBtn.innerHTML = '<i class="fa-solid fa-envelope-open-text"></i> Open Letter';
+    }
+  });
+}
+
+/* ==========================================================================
+   11. GALERI FOTO & LIGHTBOX
+   ========================================================================== */
+function initPhotoGallery() {
+  const grid = document.getElementById("gallery-grid");
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const lightboxCaption = document.getElementById("lightbox-caption");
+  const closeBtn = document.getElementById("lightbox-close");
+
+  BIRTHDAY_CONFIG.photos.forEach((photo, idx) => {
+    const card = document.createElement("article");
+    card.className = "polaroid-card";
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-label", `View photo ${idx + 1}`);
+
+    const imgWrap = document.createElement("div");
+    imgWrap.className = "polaroid-img-wrap";
+
     const img = document.createElement("img");
     img.src = photo.src;
     img.alt = photo.caption;
     img.loading = "lazy";
+
     img.onerror = () => {
-      img.src = makePlaceholder(index + 1);
-      img.alt = `${photo.caption} — placeholder, ganti dengan foto lokal`;
+      img.src = createFallbackPhotoDataURI(idx + 1);
     };
-    const caption = document.createElement("figcaption");
+
+    const caption = document.createElement("p");
+    caption.className = "polaroid-caption";
     caption.textContent = photo.caption;
-    figure.append(img, caption);
-    figure.addEventListener("click", () => openLightbox(index));
-    grid.appendChild(figure);
+
+    imgWrap.appendChild(img);
+    card.appendChild(imgWrap);
+    card.appendChild(caption);
+
+    const openModal = () => {
+      lightboxImg.src = img.src;
+      lightboxCaption.textContent = photo.caption;
+      lightbox.classList.remove("hidden");
+    };
+
+    card.addEventListener("click", openModal);
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openModal();
+      }
+    });
+
+    grid.appendChild(card);
+  });
+
+  const closeModal = () => lightbox.classList.add("hidden");
+  closeBtn.addEventListener("click", closeModal);
+  lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) closeModal();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !lightbox.classList.contains("hidden")) {
+      closeModal();
+    }
   });
 }
-function makePlaceholder(number) {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="750" viewBox="0 0 600 750"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f3d6df"/><stop offset="1" stop-color="#ddd4ef"/></linearGradient></defs><rect width="600" height="750" fill="url(#g)"/><circle cx="300" cy="300" r="100" fill="#fff" opacity=".35"/><text x="300" y="470" text-anchor="middle" font-family="Georgia" font-size="34" fill="#876b7c">Your photo ${number}</text><text x="300" y="520" text-anchor="middle" font-family="Arial" font-size="18" fill="#9a7e90">Replace photo${number}.jpg</text></svg>`;
-  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
-}
-function openLightbox(index) {
-  activePhoto = index;
-  updateLightbox();
-  $("#lightbox").hidden = false;
-  document.body.style.overflow = "hidden";
-  $("#lightboxClose").focus();
-}
-function updateLightbox() {
-  const photo = CONFIG.photos[activePhoto];
-  $("#lightboxImage").src = photo.src;
-  $("#lightboxImage").onerror = () => { $("#lightboxImage").src = makePlaceholder(activePhoto + 1); };
-  $("#lightboxCaption").textContent = photo.caption;
-}
-function closeLightbox() {
-  $("#lightbox").hidden = true;
-  document.body.style.overflow = "";
-}
-function movePhoto(direction) {
-  activePhoto = (activePhoto + direction + CONFIG.photos.length) % CONFIG.photos.length;
-  updateLightbox();
-}
-renderGallery();
-$("#lightboxClose").addEventListener("click", closeLightbox);
-$("#lightboxPrev").addEventListener("click", () => movePhoto(-1));
-$("#lightboxNext").addEventListener("click", () => movePhoto(1));
-$("#lightbox").addEventListener("click", (event) => { if (event.target === $("#lightbox")) closeLightbox(); });
-document.addEventListener("keydown", (event) => {
-  if ($("#lightbox").hidden) return;
-  if (event.key === "Escape") closeLightbox();
-  if (event.key === "ArrowLeft") movePhoto(-1);
-  if (event.key === "ArrowRight") movePhoto(1);
-});
 
-/* Music: playback starts only after explicit user action */
-async function toggleMusic() {
-  try {
-    if (birthdayAudio.paused) {
-      await birthdayAudio.play();
-      musicStarted = true;
-      $("#musicToggle").classList.add("playing");
-      $("#musicButtonText").textContent = "Pause music";
-    } else {
-      birthdayAudio.pause();
-      $("#musicToggle").classList.remove("playing");
-      $("#musicButtonText").textContent = "Play music";
+function createFallbackPhotoDataURI(index) {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500">
+    <defs>
+      <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#fce4ec"/>
+        <stop offset="100%" stop-color="#ede7f6"/>
+      </linearGradient>
+    </defs>
+    <rect width="400" height="500" fill="url(#g)"/>
+    <text x="50%" y="46%" dominant-baseline="middle" text-anchor="middle" font-family="Georgia, serif" font-size="24" fill="#e87a9f">Memory #${index}</text>
+    <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#7d6b78">Replace assets/images/photo${index}.jpg</text>
+  </svg>`;
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+}
+
+/* ==========================================================================
+   12. INTERACTIVE SURPRISE BUTTON
+   ========================================================================== */
+function initSurpriseFeature() {
+  const surpriseBtn = document.getElementById("surprise-btn");
+  const surpriseText = document.getElementById("surprise-text");
+  let lastMsgIdx = -1;
+  let gradientIdx = 0;
+
+  surpriseBtn.addEventListener("click", () => {
+    let randomIdx;
+    do {
+      randomIdx = Math.floor(Math.random() * BIRTHDAY_CONFIG.surpriseMessages.length);
+    } while (randomIdx === lastMsgIdx && BIRTHDAY_CONFIG.surpriseMessages.length > 1);
+    lastMsgIdx = randomIdx;
+
+    gradientIdx = (gradientIdx + 1) % BIRTHDAY_CONFIG.surpriseGradients.length;
+    document.body.style.background = BIRTHDAY_CONFIG.surpriseGradients[gradientIdx];
+
+    surpriseText.style.opacity = "0";
+    surpriseText.style.transform = "translateY(8px)";
+
+    setTimeout(() => {
+      surpriseText.textContent = BIRTHDAY_CONFIG.surpriseMessages[randomIdx];
+      surpriseText.style.opacity = "1";
+      surpriseText.style.transform = "translateY(0)";
+    }, 220);
+
+    launchConfetti(85);
+  });
+}
+
+/* ==========================================================================
+   13. COUNTDOWN & PERHITUNGAN USIA OTOMATIS
+   ========================================================================== */
+function initCountdownAndAge() {
+  const birthDate = parseLocalDate(BIRTHDAY_CONFIG.birthDate);
+  const fullBirthStr = birthDate.toLocaleDateString("id-ID", {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
+  document.getElementById("birth-date-full").textContent = fullBirthStr;
+
+  function updateClock() {
+    const now = new Date();
+    const currentYear = now.getFullYear();
+
+    const isBirthdayToday =
+      now.getMonth() === birthDate.getMonth() &&
+      now.getDate() === birthDate.getDate();
+
+    let calculatedAge = currentYear - birthDate.getFullYear();
+    const displayAge = BIRTHDAY_CONFIG.customAge !== null ? BIRTHDAY_CONFIG.customAge : calculatedAge;
+    document.getElementById("celebrating-age").textContent = `${displayAge} Tahun`;
+
+    let nextBirthday = new Date(currentYear, birthDate.getMonth(), birthDate.getDate(), 0, 0, 0);
+    if (now > nextBirthday && !isBirthdayToday) {
+      nextBirthday.setFullYear(currentYear + 1);
     }
-  } catch (error) {
-    $("#musicButtonText").textContent = `Audio unavailable`;
-    console.warn("Audio belum dapat diputar. Pastikan file audio tersedia.", error);
-  }
-}
-$("#musicToggle").addEventListener("click", toggleMusic);
-birthdayAudio.addEventListener("ended", () => {
-  $("#musicToggle").classList.remove("playing");
-  $("#musicButtonText").textContent = "Play music";
-});
 
-/* Surprise message */
-const surpriseMessages = [
-  "You are one of a kind! 💗",
-  "Keep smiling, beautiful soul!",
-  "May all your dreams come true!",
-  "You deserve the happiest life!",
-  "Sending you endless hugs! 🤗"
-];
-let lastSurprise = -1;
-$("#surpriseButton").addEventListener("click", () => {
-  let next;
-  do { next = Math.floor(Math.random() * surpriseMessages.length); } while (next === lastSurprise);
-  lastSurprise = next;
-  $("#surpriseMessage").textContent = surpriseMessages[next];
-  document.body.classList.toggle("magical-mode");
-  confettiBurst(48);
-});
+    const todayBanner = document.getElementById("birthday-today-banner");
+    const countdownBoxes = document.getElementById("countdown-boxes");
+    const countdownHeading = document.getElementById("countdown-heading");
 
-/* Date parsing, birthday countdown and age display */
-function parseBirthDate(value) {
-  const [year, month, day] = value.split("-").map(Number);
-  return new Date(year, month - 1, day);
-}
-function formatDate(date) {
-  return new Intl.DateTimeFormat("en-US", { day: "numeric", month: "long", year: "numeric" }).format(date);
-}
-function updateCountdown() {
-  const now = new Date();
-  const birth = parseBirthDate(CONFIG.birthDate);
-  let nextBirthday = new Date(now.getFullYear(), birth.getMonth(), birth.getDate());
-  const isBirthday = now.getMonth() === birth.getMonth() && now.getDate() === birth.getDate();
-  if (nextBirthday < new Date(now.getFullYear(), now.getMonth(), now.getDate())) {
-    nextBirthday = new Date(now.getFullYear() + 1, birth.getMonth(), birth.getDate());
-  }
-  if (isBirthday) {
-    $("#todayMessage").textContent = "Today Is Your Special Day! ♡";
-  } else {
-    $("#todayMessage").textContent = `Counting down to ${CONFIG.recipientName}'s next birthday ✨`;
-  }
-  const diff = Math.max(0, nextBirthday.getTime() - now.getTime());
-  const days = Math.floor(diff / 86400000);
-  const hours = Math.floor((diff % 86400000) / 3600000);
-  const minutes = Math.floor((diff % 3600000) / 60000);
-  const seconds = Math.floor((diff % 60000) / 1000);
-  $("#days").textContent = String(days).padStart(2, "0");
-  $("#hours").textContent = String(hours).padStart(2, "0");
-  $("#minutes").textContent = String(minutes).padStart(2, "0");
-  $("#seconds").textContent = String(seconds).padStart(2, "0");
-}
-countdownTimer = window.setInterval(updateCountdown, 1000);
-updateCountdown();
+    if (isBirthdayToday) {
+      todayBanner.classList.remove("hidden");
+      countdownBoxes.classList.add("hidden");
+      countdownHeading.textContent = "Happy Birthday Celebration!";
+      return;
+    } else {
+      todayBanner.classList.add("hidden");
+      countdownBoxes.classList.remove("hidden");
+      countdownHeading.textContent = `Countdown to ${nextBirthday.getFullYear()} Birthday`;
+    }
 
-/* Scroll reveal */
-let revealObserver;
-function observeReveals() {
-  const items = document.querySelectorAll("#birthdaySite .reveal:not(.visible)");
-  if (!("IntersectionObserver" in window)) {
-    items.forEach((item) => item.classList.add("visible"));
-    return;
+    const diff = nextBirthday - now;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("cd-days").textContent = String(days).padStart(2, "0");
+    document.getElementById("cd-hours").textContent = String(hours).padStart(2, "0");
+    document.getElementById("cd-minutes").textContent = String(minutes).padStart(2, "0");
+    document.getElementById("cd-seconds").textContent = String(seconds).padStart(2, "0");
   }
-  if (!revealObserver) {
-    revealObserver = new IntersectionObserver((entries, observer) => {
+
+  updateClock();
+  setInterval(updateClock, 1000);
+}
+
+/* ==========================================================================
+   14. SCROLL REVEAL OBSERVER
+   ========================================================================== */
+function initScrollReveal() {
+  const observer = new IntersectionObserver(
+    (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add("visible");
-          observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12 });
-  }
-  items.forEach((item) => revealObserver.observe(item));
+    },
+    { threshold: 0.14 }
+  );
+
+  document.querySelectorAll(".reveal-on-scroll").forEach((el) => observer.observe(el));
 }
