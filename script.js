@@ -2,10 +2,10 @@
    BIRTHDAY CARD CONFIGURATION — ubah data di bagian ini saja
    ========================================================= */
 const CONFIG = {
-  recipientName: "Alya",
-  senderName: "Someone Who Cares",
-  birthDate: "2000-11-26", // format YYYY-MM-DD
-  celebratedAge: 26,       // usia yang sedang dirayakan
+  recipientName: "CEYRAAA",
+  senderName: "AYAH 7B WKWK",
+  birthDate: "2013-11-26", // format YYYY-MM-DD
+  celebratedAge: 13,       // usia yang sedang dirayakan
   birthdayMessage: "Today is your special day. May your life always be filled with happiness, endless blessings, beautiful memories, and wonderful surprises. Never stop smiling, never stop dreaming, and always remember how special you are. You deserve all the beautiful things in this world.",
   letter: [
     "On your special day, I just want to remind you how wonderful you are.",
