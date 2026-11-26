@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fff3f6">
+  <meta name="description" content="A little birthday surprise, made with love.">
+  <title>A Little Birthday Surprise</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="ambient" aria-hidden="true">
+    <span class="ambient-orb orb-one"></span><span class="ambient-orb orb-two"></span>
+    <div id="floatingDecor"></div>
+  </div>
+
+  <main>
+    <section class="welcome-screen" id="welcome" aria-labelledby="welcomeTitle">
+      <div class="welcome-card glass">
+        <p class="eyebrow">A LITTLE SOMETHING, JUST FOR YOU</p>
+        <div class="gift" id="gift" aria-hidden="true">
+          <div class="gift-bow"></div><div class="gift-lid"></div>
+          <div class="gift-box"><span></span></div>
+          <div class="gift-ribbon"></div>
+        </div>
+        <h1 id="welcomeTitle">Something Special <em>For You</em></h1>
+        <p class="welcome-copy">I have a little surprise for you…</p>
+        <button class="button button-primary" id="openGift">Open Your Gift <span aria-hidden="true">✧</span></button>
+        <p class="tiny-note">Take a little moment. This is all for you.</p>
+      </div>
+    </section>
+
+    <div id="birthdaySite" class="birthday-site" hidden>
+      <header class="hero section-wrap" id="home">
+        <nav class="topbar">
+          <a class="brand" href="#home">little<span>joy</span><i>♡</i></a>
+          <button class="music-toggle" id="musicToggle" aria-label="Putar atau jeda musik">
+            <span class="equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+            <span id="musicButtonText">Play music</span>
+            <input class="volume-control" id="volumeControl" type="range" min="0" max="1" step="0.05" value="0.65" aria-label="Volume musik">
+          </button>
+        </nav>
+        <div class="hero-content">
+          <p class="eyebrow reveal">TODAY IS ALL ABOUT YOU</p>
+          <h1 class="hero-title reveal">Happy <span>Birthday!</span></h1>
+          <p class="recipient reveal" id="recipientName">Dearest You</p>
+          <p class="hero-message reveal" id="heroMessage"></p>
+          <div class="hero-date reveal"><span>✦</span><span id="birthdayDateLabel"></span><span>✦</span></div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <span class="balloon balloon-a"></span><span class="balloon balloon-b"></span><span class="balloon balloon-c"></span>
+          <span class="hero-sparkle sparkle-a">✧</span><span class="hero-sparkle sparkle-b">✦</span>
+          <span class="heart heart-a">♡</span><span class="heart heart-b">♥</span>
+        </div>
+        <a class="scroll-cue" href="#cake">SCROLL TO YOUR SURPRISE <span>↓</span></a>
+      </header>
+
+      <section class="section-wrap cake-section" id="cake">
+        <div class="section-heading reveal">
+          <p class="eyebrow">A WISH JUST FOR YOU</p>
+          <h2>Make a wish <em>and let it shine.</em></h2>
+          <p>Close your eyes, make a little wish, and blow the candles.</p>
+        </div>
+        <div class="cake-stage reveal">
+          <div class="cake-glow"></div>
+          <div class="cake-illustration" id="cakeIllustration" aria-label="Ilustrasi kue ulang tahun dengan lilin">
+            <div class="flame" id="flame"><span></span></div>
+            <div class="candle"><i></i></div>
+            <div class="cake-top"></div><div class="cake-layer layer-top"></div>
+            <div class="cake-layer layer-middle"></div><div class="cake-layer layer-bottom"></div>
+            <div class="cake-plate"></div>
+          </div>
+          <p class="wish-hint" id="wishHint">Make a wish and blow the candles!</p>
+          <button class="button button-primary" id="blowCandles">Blow the Candles ✨</button>
+          <p class="wish-result" id="wishResult" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section class="letter-section">
+        <div class="section-wrap letter-layout">
+          <div class="section-heading reveal">
+            <p class="eyebrow">A NOTE FROM THE HEART</p>
+            <h2>A little letter <em>for you.</em></h2>
+            <p>Some words are too special to be left unsaid.</p>
+          </div>
+          <div class="letter-area reveal">
+            <button class="envelope" id="openLetter" aria-label="Buka surat ulang tahun">
+              <span class="envelope-back"></span><span class="letter-preview">A little note<br>for you <b>♡</b></span>
+              <span class="envelope-flap"></span><span class="envelope-front"></span>
+              <span class="seal">♡</span>
+            </button>
+            <p class="letter-instruction" id="letterInstruction">Tap the envelope to open your letter</p>
+            <article class="letter-paper" id="letterPaper" hidden>
+              <button class="letter-close" id="closeLetter" aria-label="Tutup surat">×</button>
+              <p class="letter-kicker">A LETTER FOR YOU</p>
+              <div id="letterContent"></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-wrap gallery-section" id="memories">
+        <div class="section-heading centered reveal">
+          <p class="eyebrow">A COLLECTION OF LITTLE JOYS</p>
+          <h2>Little Moments, <em>Beautiful Memories</em></h2>
+          <p>Every memory has a little piece of magic in it.</p>
+        </div>
+        <div class="photo-grid" id="photoGrid"></div>
+      </section>
+
+      <section class="surprise-section">
+        <div class="section-wrap surprise-card glass reveal">
+          <span class="surprise-star">✧</span>
+          <p class="eyebrow">ONE MORE LITTLE THING</p>
+          <h2>Because you deserve <em>all the magic.</em></h2>
+          <p id="surpriseMessage" aria-live="polite">There's a tiny surprise waiting just for you.</p>
+          <button class="button button-light" id="surpriseButton">Click for a Surprise! ✨</button>
+        </div>
+      </section>
+
+      <section class="section-wrap countdown-section">
+        <div class="section-heading centered reveal">
+          <p class="eyebrow">ANOTHER YEAR OF YOU</p>
+          <h2>More beautiful days <em>are on their way.</em></h2>
+          <p id="ageLabel"></p>
+        </div>
+        <div class="countdown reveal" id="countdown">
+          <div><strong id="days">00</strong><span>Days</span></div>
+          <div><strong id="hours">00</strong><span>Hours</span></div>
+          <div><strong id="minutes">00</strong><span>Minutes</span></div>
+          <div><strong id="seconds">00</strong><span>Seconds</span></div>
+        </div>
+        <p class="today-message" id="todayMessage" aria-live="polite"></p>
+      </section>
+
+      <footer><p>Made with <span>♡</span> just for you.</p><small>© <span id="year"></span> · A little page full of love</small></footer>
+    </div>
+  </main>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto kenangan" hidden>
+    <button class="lightbox-close" id="lightboxClose" aria-label="Tutup foto">×</button>
+    <button class="lightbox-nav prev" id="lightboxPrev" aria-label="Foto sebelumnya">‹</button>
+    <figure><img id="lightboxImage" src="" alt=""><figcaption id="lightboxCaption"></figcaption></figure>
+    <button class="lightbox-nav next" id="lightboxNext" aria-label="Foto berikutnya">›</button>
+  </div>
+
+  <audio id="birthdayAudio" src="assets/audio/birthday-music.mp3" preload="none" loop></audio>
+  <script src="script.js"></script>
+</body>
+</html>
