@@ -2,7 +2,7 @@
    BIRTHDAY CARD CONFIGURATION — ubah data di bagian ini saja
    ========================================================= */
 const CONFIG = {
-  recipientName: "CEYRAAA",
+  recipientName: "Ceyraaa",
   senderName: "AYAH 7B WKWK",
   birthDate: "2013-11-26", // format YYYY-MM-DD
   celebratedAge: 13,       // usia yang sedang dirayakan
