@@ -1,153 +1,270 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#fff3f6">
-  <meta name="description" content="A little birthday surprise, made with love.">
-  <title>A Little Birthday Surprise</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday! ✨</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <!-- Font Awesome untuk Ikon Minimalis -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="ambient" aria-hidden="true">
-    <span class="ambient-orb orb-one"></span><span class="ambient-orb orb-two"></span>
-    <div id="floatingDecor"></div>
-  </div>
+  <!-- Canvas untuk Confetti & Sparkles -->
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
 
-  <main>
-    <section class="welcome-screen" id="welcome" aria-labelledby="welcomeTitle">
-      <div class="welcome-card glass">
-        <p class="eyebrow">A LITTLE SOMETHING, JUST FOR YOU</p>
-        <div class="gift" id="gift" aria-hidden="true">
-          <div class="gift-bow"></div><div class="gift-lid"></div>
-          <div class="gift-box"><span></span></div>
-          <div class="gift-ribbon"></div>
+  <!-- Dekorasi Partikel & Floating Elements Latar Belakang -->
+  <div id="ambient-particles" class="ambient-particles" aria-hidden="true"></div>
+
+  <!-- 1. WELCOME SCREEN (HALAMAN PEMBUKA) -->
+  <section id="welcome-screen" class="welcome-screen" aria-label="Welcome Screen">
+    <div class="welcome-card glass-panel">
+      <div class="gift-container" id="gift-box" role="button" tabindex="0" aria-label="Gift Box">
+        <div class="gift-glow"></div>
+        <div class="gift-lid">
+          <div class="gift-bow-left"></div>
+          <div class="gift-bow-right"></div>
+          <div class="gift-ribbon-lid"></div>
         </div>
-        <h1 id="welcomeTitle">Something Special <em>For You</em></h1>
-        <p class="welcome-copy">I have a little surprise for you…</p>
-        <button class="button button-primary" id="openGift">Open Your Gift <span aria-hidden="true">✧</span></button>
-        <p class="tiny-note">Take a little moment. This is all for you.</p>
+        <div class="gift-body">
+          <div class="gift-ribbon-body"></div>
+        </div>
+      </div>
+
+      <h1 class="welcome-title">Something Special For You</h1>
+      <p class="welcome-subtitle">I have a little surprise for you…</p>
+
+      <button id="open-gift-btn" class="btn-primary">
+        <i class="fa-solid fa-gift"></i> Open Your Gift
+      </button>
+    </div>
+  </section>
+
+  <!-- KONTEN UTAMA (MUNCUL SETELAH HADIAH DIBUKA) -->
+  <main id="main-content" class="main-content hidden">
+    <!-- Floating Balloons di Latar Halaman Utama -->
+    <div id="balloons-container" class="balloons-container" aria-hidden="true"></div>
+
+    <!-- Floating Music Player Widget -->
+    <aside class="music-widget glass-panel" aria-label="Music Player">
+      <button id="music-toggle-btn" class="music-btn" aria-label="Play or Pause Music">
+        <i class="fa-solid fa-play" id="music-icon"></i>
+      </button>
+      <div class="music-info">
+        <span class="music-label">Now Playing</span>
+        <p id="song-title" class="song-title">Birthday Melody</p>
+      </div>
+      <div class="equalizer" id="equalizer" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <div class="volume-control">
+        <i class="fa-solid fa-volume-low"></i>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.6" aria-label="Volume" />
+      </div>
+      <audio id="bg-music" loop preload="metadata">
+        <source src="assets/audio/birthday-music.mp3" type="audio/mpeg" />
+      </audio>
+    </aside>
+
+    <!-- 2. HERO / BIRTHDAY GREETING -->
+    <header class="hero-section section-container">
+      <div class="hero-badge reveal-item">
+        <i class="fa-solid fa-sparkles"></i>
+        <span id="birthday-date-display">November 26</span>
+      </div>
+
+      <h1 class="hero-script-title reveal-item">Happy Birthday!</h1>
+      <h2 class="hero-name reveal-item" id="recipient-name-display">[NAMA]</h2>
+
+      <div class="greeting-box glass-panel reveal-item">
+        <p id="greeting-text" class="greeting-paragraph"></p>
+      </div>
+
+      <a href="#cake-section" class="scroll-hint" aria-label="Scroll down">
+        <span>Scroll for your surprises</span>
+        <i class="fa-solid fa-chevron-down"></i>
+      </a>
+    </header>
+
+    <!-- 3. ANIMASI KUE ULANG TAHUN -->
+    <section id="cake-section" class="section-container reveal-on-scroll">
+      <div class="section-header">
+        <span class="section-tag">Make a Wish</span>
+        <h2 class="section-title">Blow Out the Candles</h2>
+        <p class="section-desc" id="wish-instruction">Make a wish and blow the candles!</p>
+      </div>
+
+      <div class="cake-stage glass-panel">
+        <div class="cake-wrapper" id="cake-wrapper">
+          <!-- Lilin & Api -->
+          <div class="candles-row">
+            <div class="candle">
+              <div class="flame" data-candle="1"></div>
+              <div class="smoke"></div>
+              <div class="wick"></div>
+            </div>
+            <div class="candle candle-center">
+              <div class="flame" data-candle="2"></div>
+              <div class="smoke"></div>
+              <div class="wick"></div>
+            </div>
+            <div class="candle">
+              <div class="flame" data-candle="3"></div>
+              <div class="smoke"></div>
+              <div class="wick"></div>
+            </div>
+          </div>
+
+          <!-- Lapisan Kue -->
+          <div class="cake-tier tier-top">
+            <div class="frosting-drip"></div>
+            <div class="sprinkles"></div>
+          </div>
+          <div class="cake-tier tier-middle">
+            <div class="frosting-drip"></div>
+          </div>
+          <div class="cake-tier tier-bottom">
+            <div class="cake-ribbon"></div>
+          </div>
+          <div class="cake-plate"></div>
+        </div>
+
+        <p id="wish-message" class="wish-message hidden">Your wish is on its way! ✨</p>
+
+        <div class="cake-controls">
+          <button id="blow-candles-btn" class="btn-primary">
+            <i class="fa-solid fa-wind"></i> Blow the Candles
+          </button>
+          <button id="relight-candles-btn" class="btn-secondary hidden">
+            <i class="fa-solid fa-fire"></i> Light Again
+          </button>
+        </div>
       </div>
     </section>
 
-    <div id="birthdaySite" class="birthday-site" hidden>
-      <header class="hero section-wrap" id="home">
-        <nav class="topbar">
-          <a class="brand" href="#home">little<span>joy</span><i>♡</i></a>
-          <button class="music-toggle" id="musicToggle" aria-label="Putar atau jeda musik">
-            <span class="equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-            <span id="musicButtonText">Play music</span>
-            <input class="volume-control" id="volumeControl" type="range" min="0" max="1" step="0.05" value="0.65" aria-label="Volume musik">
-          </button>
-        </nav>
-        <div class="hero-content">
-          <p class="eyebrow reveal">TODAY IS ALL ABOUT YOU</p>
-          <h1 class="hero-title reveal">Happy <span>Birthday!</span></h1>
-          <p class="recipient reveal" id="recipientName">Dearest You</p>
-          <p class="hero-message reveal" id="heroMessage"></p>
-          <div class="hero-date reveal"><span>✦</span><span id="birthdayDateLabel"></span><span>✦</span></div>
-        </div>
-        <div class="hero-art" aria-hidden="true">
-          <span class="balloon balloon-a"></span><span class="balloon balloon-b"></span><span class="balloon balloon-c"></span>
-          <span class="hero-sparkle sparkle-a">✧</span><span class="hero-sparkle sparkle-b">✦</span>
-          <span class="heart heart-a">♡</span><span class="heart heart-b">♥</span>
-        </div>
-        <a class="scroll-cue" href="#cake">SCROLL TO YOUR SURPRISE <span>↓</span></a>
-      </header>
+    <!-- 4. PERSONAL MESSAGE (SURAT DIGITAL) -->
+    <section id="letter-section" class="section-container reveal-on-scroll">
+      <div class="section-header">
+        <span class="section-tag">Heartfelt Words</span>
+        <h2 class="section-title">A Letter For You</h2>
+      </div>
 
-      <section class="section-wrap cake-section" id="cake">
-        <div class="section-heading reveal">
-          <p class="eyebrow">A WISH JUST FOR YOU</p>
-          <h2>Make a wish <em>and let it shine.</em></h2>
-          <p>Close your eyes, make a little wish, and blow the candles.</p>
-        </div>
-        <div class="cake-stage reveal">
-          <div class="cake-glow"></div>
-          <div class="cake-illustration" id="cakeIllustration" aria-label="Ilustrasi kue ulang tahun dengan lilin">
-            <div class="flame" id="flame"><span></span></div>
-            <div class="candle"><i></i></div>
-            <div class="cake-top"></div><div class="cake-layer layer-top"></div>
-            <div class="cake-layer layer-middle"></div><div class="cake-layer layer-bottom"></div>
-            <div class="cake-plate"></div>
+      <div class="envelope-area">
+        <div class="envelope-wrapper" id="envelope-wrapper">
+          <div class="envelope-back"></div>
+          <div class="letter-paper" id="letter-paper">
+            <div class="letter-inner">
+              <div class="letter-header-decor">♡</div>
+              <div id="letter-content" class="letter-content"></div>
+            </div>
           </div>
-          <p class="wish-hint" id="wishHint">Make a wish and blow the candles!</p>
-          <button class="button button-primary" id="blowCandles">Blow the Candles ✨</button>
-          <p class="wish-result" id="wishResult" aria-live="polite"></p>
+          <div class="envelope-front"></div>
+          <div class="envelope-flap"></div>
+          <div class="wax-seal" aria-hidden="true">♡</div>
         </div>
-      </section>
 
-      <section class="letter-section">
-        <div class="section-wrap letter-layout">
-          <div class="section-heading reveal">
-            <p class="eyebrow">A NOTE FROM THE HEART</p>
-            <h2>A little letter <em>for you.</em></h2>
-            <p>Some words are too special to be left unsaid.</p>
+        <button id="open-letter-btn" class="btn-primary">
+          <i class="fa-solid fa-envelope-open-text"></i> Open Letter
+        </button>
+      </div>
+    </section>
+
+    <!-- 5. PHOTO GALLERY -->
+    <section id="gallery-section" class="section-container reveal-on-scroll">
+      <div class="section-header">
+        <span class="section-tag">Captured Memories</span>
+        <h2 class="section-title">Little Moments, Beautiful Memories</h2>
+      </div>
+
+      <div id="gallery-grid" class="gallery-grid">
+        <!-- Kartu foto dirender otomatis dari konfigurasi script.js -->
+      </div>
+    </section>
+
+    <!-- 6. INTERACTIVE SURPRISE -->
+    <section id="surprise-section" class="section-container reveal-on-scroll">
+      <div class="surprise-box glass-panel">
+        <span class="section-tag">Little Magic</span>
+        <h2 class="section-title">Need Another Smile?</h2>
+        <p class="section-desc">Tap the button below for a random birthday blessing &amp; mood shift!</p>
+
+        <div id="surprise-message-card" class="surprise-message-card">
+          <p id="surprise-text">Click the button to reveal a sweet note ✨</p>
+        </div>
+
+        <button id="surprise-btn" class="btn-primary btn-gold">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> Click for a Surprise!
+        </button>
+      </div>
+    </section>
+
+    <!-- 7. COUNTDOWN DAN UMUR -->
+    <section id="countdown-section" class="section-container reveal-on-scroll">
+      <div class="section-header">
+        <span class="section-tag">Milestone &amp; Time</span>
+        <h2 class="section-title">Celebrating You</h2>
+      </div>
+
+      <div class="milestone-grid">
+        <div class="milestone-card glass-panel">
+          <i class="fa-solid fa-calendar-heart milestone-icon"></i>
+          <span class="milestone-label">Born On</span>
+          <strong id="birth-date-full" class="milestone-value">-</strong>
+        </div>
+
+        <div class="milestone-card glass-panel">
+          <i class="fa-solid fa-crown milestone-icon"></i>
+          <span class="milestone-label">Celebrating Age</span>
+          <strong id="celebrating-age" class="milestone-value">-</strong>
+        </div>
+      </div>
+
+      <div class="countdown-wrapper glass-panel">
+        <h3 id="countdown-heading" class="countdown-heading">Countdown to Next Birthday</h3>
+        <div id="birthday-today-banner" class="birthday-today-banner hidden">
+          🎉 Today Is Your Special Day! 🎉
+        </div>
+        <div class="countdown-boxes" id="countdown-boxes">
+          <div class="time-box">
+            <span id="cd-days">00</span>
+            <small>Days</small>
           </div>
-          <div class="letter-area reveal">
-            <button class="envelope" id="openLetter" aria-label="Buka surat ulang tahun">
-              <span class="envelope-back"></span><span class="letter-preview">A little note<br>for you <b>♡</b></span>
-              <span class="envelope-flap"></span><span class="envelope-front"></span>
-              <span class="seal">♡</span>
-            </button>
-            <p class="letter-instruction" id="letterInstruction">Tap the envelope to open your letter</p>
-            <article class="letter-paper" id="letterPaper" hidden>
-              <button class="letter-close" id="closeLetter" aria-label="Tutup surat">×</button>
-              <p class="letter-kicker">A LETTER FOR YOU</p>
-              <div id="letterContent"></div>
-            </article>
+          <div class="time-box">
+            <span id="cd-hours">00</span>
+            <small>Hours</small>
+          </div>
+          <div class="time-box">
+            <span id="cd-minutes">00</span>
+            <small>Minutes</small>
+          </div>
+          <div class="time-box">
+            <span id="cd-seconds">00</span>
+            <small>Seconds</small>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="section-wrap gallery-section" id="memories">
-        <div class="section-heading centered reveal">
-          <p class="eyebrow">A COLLECTION OF LITTLE JOYS</p>
-          <h2>Little Moments, <em>Beautiful Memories</em></h2>
-          <p>Every memory has a little piece of magic in it.</p>
-        </div>
-        <div class="photo-grid" id="photoGrid"></div>
-      </section>
-
-      <section class="surprise-section">
-        <div class="section-wrap surprise-card glass reveal">
-          <span class="surprise-star">✧</span>
-          <p class="eyebrow">ONE MORE LITTLE THING</p>
-          <h2>Because you deserve <em>all the magic.</em></h2>
-          <p id="surpriseMessage" aria-live="polite">There's a tiny surprise waiting just for you.</p>
-          <button class="button button-light" id="surpriseButton">Click for a Surprise! ✨</button>
-        </div>
-      </section>
-
-      <section class="section-wrap countdown-section">
-        <div class="section-heading centered reveal">
-          <p class="eyebrow">ANOTHER YEAR OF YOU</p>
-          <h2>More beautiful days <em>are on their way.</em></h2>
-          <p id="ageLabel"></p>
-        </div>
-        <div class="countdown reveal" id="countdown">
-          <div><strong id="days">00</strong><span>Days</span></div>
-          <div><strong id="hours">00</strong><span>Hours</span></div>
-          <div><strong id="minutes">00</strong><span>Minutes</span></div>
-          <div><strong id="seconds">00</strong><span>Seconds</span></div>
-        </div>
-        <p class="today-message" id="todayMessage" aria-live="polite"></p>
-      </section>
-
-      <footer><p>Made with <span>♡</span> just for you.</p><small>© <span id="year"></span> · A little page full of love</small></footer>
-    </div>
+    <!-- 8. FOOTER -->
+    <footer class="footer">
+      <p>Made with <span class="heart-beat">♡</span> just for you. &copy; <span id="current-year"></span></p>
+    </footer>
   </main>
 
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto kenangan" hidden>
-    <button class="lightbox-close" id="lightboxClose" aria-label="Tutup foto">×</button>
-    <button class="lightbox-nav prev" id="lightboxPrev" aria-label="Foto sebelumnya">‹</button>
-    <figure><img id="lightboxImage" src="" alt=""><figcaption id="lightboxCaption"></figcaption></figure>
-    <button class="lightbox-nav next" id="lightboxNext" aria-label="Foto berikutnya">›</button>
+  <!-- LIGHTBOX MODAL UNTUK GALERI FOTO -->
+  <div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true" aria-label="Photo Preview">
+    <button id="lightbox-close" class="lightbox-close" aria-label="Close Preview">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="Memory Preview" />
+      <p id="lightbox-caption" class="lightbox-caption"></p>
+    </div>
   </div>
 
-  <audio id="birthdayAudio" src="assets/audio/birthday-music.mp3" preload="none" loop></audio>
   <script src="script.js"></script>
 </body>
 </html>
