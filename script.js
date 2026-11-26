@@ -23,7 +23,7 @@ You deserve all the beautiful things in this world. ✨`,
   // Isi Surat Digital di Dalam Amplop (Mix Bahasa Indonesia & Bahasa Inggris)
   letterMessage: `Dear Ceyra,
 
-On your special day, Bapak/Ibu ingin mengingatkan betapa bangganya kami melihat perkembanganmu. Happy birthday, semoga tahun ini membawa banyak cerita seru dan prestasi yang membanggakan!
+On your special day, ustadz ingin mengingatkan betapa bangganya kami melihat perkembanganmu. Happy birthday, semoga tahun ini membawa banyak cerita seru dan prestasi yang membanggakan!
 
 I hope this new chapter brings you countless reasons to smile, new adventures, beautiful opportunities, and everything your heart has been wishing for. Jangan pernah takut mencoba hal baru dan teruslah bertanya kalau ada yang belum kamu pahami.
 
@@ -34,7 +34,7 @@ Keep shining, keep growing, and keep being yourself. Tetap rendah hati, rajin be
 Once again, Happy Birthday! Selamat ulang tahun, Ceyra!
 
 With love & best wishes,
-Pak Usamah`,
+Ayah 7b wkwk`,
 
   // Daftar Foto Galeri (Pastikan nama file sesuai dengan folder assets/images/)
   photos: [
